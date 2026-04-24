@@ -1,0 +1,306 @@
+CRITERION: 1.1.1 Non-text Content (Level A)
+DESCRIPTION: All non-text content that is presented to the user has a text alternative that serves the equivalent purpose. This includes images, icons, charts, diagrams, audio, video, and other non-text elements. Text alternatives allow assistive technologies like screen readers to convey the meaning to users who cannot perceive the non-text content.
+COMMON_VIOLATIONS: Missing alt attribute on img tags, empty alt on informative images, decorative images missing alt="" or role="presentation", images used as buttons without accessible names, SVG icons without aria-label or title, canvas elements without text alternatives, CSS background images conveying information without text equivalent.
+FIX_PATTERN: Add descriptive alt="[meaningful description]" to all informative images. Use alt="" for decorative images. For functional images (buttons/links), describe the action. For complex images (charts/diagrams), provide a long description via aria-describedby or a visible caption. For SVG, add <title> and aria-labelledby or aria-label.
+WCAG_TAGS: perceivable, text-alternative, images, icons, svg, canvas
+---
+CRITERION: 1.2.1 Audio-only and Video-only (Prerecorded) (Level A)
+DESCRIPTION: For prerecorded audio-only and prerecorded video-only media, the following are true: Audio-only has a text transcript. Video-only has either an audio track or text transcript describing the visual information.
+COMMON_VIOLATIONS: Audio podcasts or recordings without transcripts, silent video demonstrations without captions or text descriptions, video slideshows without text equivalents.
+FIX_PATTERN: Provide a full text transcript for all prerecorded audio-only content. For video-only content without audio, provide either a text transcript describing all visual information or an audio description track. Link the transcript near the media element.
+WCAG_TAGS: perceivable, time-based-media, audio, video, transcript
+---
+CRITERION: 1.2.2 Captions (Prerecorded) (Level A)
+DESCRIPTION: Captions are provided for all prerecorded audio content in synchronized media, except when the media is a media alternative for text that is clearly labeled as such.
+COMMON_VIOLATIONS: Videos without captions or subtitles, auto-generated captions that are inaccurate or not reviewed, captions that don't include speaker identification or sound effects.
+FIX_PATTERN: Add a <track kind="captions"> element to <video> tags pointing to a WebVTT (.vtt) or SRT caption file. Ensure captions include all spoken dialogue, speaker identification when relevant, and meaningful non-speech sounds.
+WCAG_TAGS: perceivable, time-based-media, captions, video, synchronized-media
+---
+CRITERION: 1.2.3 Audio Description or Media Alternative (Prerecorded) (Level A)
+DESCRIPTION: An audio description or full text alternative is provided for synchronized media except when the media is a media alternative for text that is clearly labeled.
+COMMON_VIOLATIONS: Videos that include visual information not conveyed in the audio track without an audio description, complex diagrams shown in video without narration.
+FIX_PATTERN: Add a <track kind="descriptions"> element for audio description. Alternatively, provide a full text transcript that describes all visual information. Consider providing an alternative version of the video with an embedded audio description track.
+WCAG_TAGS: perceivable, time-based-media, audio-description, video
+---
+CRITERION: 1.2.4 Captions (Live) (Level AA)
+DESCRIPTION: Captions are provided for all live audio content in synchronized media.
+COMMON_VIOLATIONS: Live streams, webinars, or video conferences without real-time captioning, using auto-generated captions for live content without verification.
+FIX_PATTERN: Use a live captioning service or real-time speech-to-text API to provide synchronized live captions. Ensure captions appear with minimal delay. Platforms should support live caption tracks via TTML or WebVTT streaming.
+WCAG_TAGS: perceivable, time-based-media, live-captions, streaming
+---
+CRITERION: 1.2.5 Audio Description (Prerecorded) (Level AA)
+DESCRIPTION: Audio description is provided for all prerecorded video content in synchronized media.
+COMMON_VIOLATIONS: Videos where visual content (such as on-screen text, actions, or scene changes) is not described in the audio, missing audio description tracks for video tutorials.
+FIX_PATTERN: Create an audio description track narrating all significant visual information not conveyed in the main audio. Add it as a secondary audio track or a <track kind="descriptions"> in the HTML video element.
+WCAG_TAGS: perceivable, time-based-media, audio-description, video
+---
+CRITERION: 1.3.1 Info and Relationships (Level A)
+DESCRIPTION: Information, structure, and relationships conveyed through presentation can be programmatically determined or are available in text. This means semantic HTML must be used so that the structure visible to sighted users is also available to assistive technologies.
+COMMON_VIOLATIONS: Using visual styling (bold, color, size) to convey meaning without semantic markup, form inputs without associated <label> elements, tables without <th> headers or scope attributes, lists implemented as divs instead of <ul>/<ol>, headings implemented as styled divs, non-sequential or skipped heading levels (h1 then h4), using <br> for paragraph spacing instead of <p> tags.
+FIX_PATTERN: Use semantic HTML5 elements: <header>, <nav>, <main>, <aside>, <footer>, <section>, <article>. Associate labels with form controls via for/id or aria-labelledby. Use <table> with <th scope="col/row"> for data tables. Use heading elements (h1-h6) in proper hierarchy. Use <ul>/<ol> for lists. Never skip heading levels.
+WCAG_TAGS: perceivable, adaptable, semantic-html, forms, tables, headings, lists
+---
+CRITERION: 1.3.2 Meaningful Sequence (Level A)
+DESCRIPTION: If the sequence in which content is presented affects its meaning, a correct reading sequence can be programmatically determined.
+COMMON_VIOLATIONS: Content laid out using tables for visual positioning that makes no sense when read in DOM order, using CSS absolute positioning to reorder visual display so it differs from DOM order, columns of text that flow in the wrong order when linearized.
+FIX_PATTERN: Ensure DOM order matches the logical reading sequence. Use CSS for visual positioning but keep source order meaningful. Use CSS Grid/Flexbox with order property carefully — only when visual order change doesn't affect meaning. Avoid using layout tables.
+WCAG_TAGS: perceivable, adaptable, reading-order, dom-order
+---
+CRITERION: 1.3.3 Sensory Characteristics (Level A)
+DESCRIPTION: Instructions provided for understanding and operating content do not rely solely on sensory characteristics of components such as shape, color, size, visual location, orientation, or sound.
+COMMON_VIOLATIONS: "Click the green button to submit", "See the instructions on the right", "Press the round icon", "Listen for the beep to continue" — all rely on sensory perception that may not be available to all users.
+FIX_PATTERN: Always include text labels in addition to color, shape, or position cues. Instead of "click the red button" say "click the Submit button". Pair visual indicators with text or ARIA labels. Never use color alone to convey information.
+WCAG_TAGS: perceivable, adaptable, sensory, color, instructions
+---
+CRITERION: 1.3.4 Orientation (Level AA)
+DESCRIPTION: Content does not restrict its view and operation to a single display orientation, such as portrait or landscape, unless a specific display orientation is essential.
+COMMON_VIOLATIONS: Locking page to portrait mode via CSS or meta viewport, JavaScript that prevents rotation, web apps that disable landscape mode on mobile.
+FIX_PATTERN: Remove CSS that locks orientation. Do not use JavaScript to override screen orientation unless absolutely essential (e.g., a specific game). Use responsive CSS that adapts to both portrait and landscape orientations.
+WCAG_TAGS: perceivable, adaptable, orientation, mobile, responsive
+---
+CRITERION: 1.3.5 Identify Input Purpose (Level AA)
+DESCRIPTION: The purpose of each input field collecting information about the user can be programmatically determined when the input field serves a purpose listed in the Input Purposes for User Interface Components section, and the content is implemented using technologies with support for identifying the expected meaning for form input data.
+COMMON_VIOLATIONS: Name, email, address, phone number fields without autocomplete attributes, login forms missing autocomplete="username" and autocomplete="current-password".
+FIX_PATTERN: Add autocomplete attributes to all relevant form fields. Examples: autocomplete="given-name", autocomplete="family-name", autocomplete="email", autocomplete="tel", autocomplete="street-address", autocomplete="postal-code", autocomplete="username", autocomplete="current-password", autocomplete="new-password".
+WCAG_TAGS: perceivable, adaptable, autocomplete, forms, input-purpose
+---
+CRITERION: 1.4.1 Use of Color (Level A)
+DESCRIPTION: Color is not used as the only visual means of conveying information, indicating an action, prompting a response, or distinguishing a visual element.
+COMMON_VIOLATIONS: Error messages indicated only by red color with no icon or text label, required form fields marked only with red color, links that differ from surrounding text only by color with no underline, charts using color alone to distinguish data series.
+FIX_PATTERN: Always pair color with another visual cue — text, pattern, icon, or shape. Use an error icon plus the word "Error:" before error messages. Add underlines to links. Mark required fields with an asterisk (*) plus "required" text. Use patterns or labels in charts in addition to color.
+WCAG_TAGS: perceivable, distinguishable, color, error-messages, charts
+---
+CRITERION: 1.4.2 Audio Control (Level A)
+DESCRIPTION: If any audio on a web page plays automatically for more than 3 seconds, either a mechanism is available to pause or stop the audio, or a mechanism is available to control audio volume independently from the overall system volume level.
+COMMON_VIOLATIONS: Background music or video with audio that auto-plays without controls, audio advertisements that play automatically without a pause/stop button.
+FIX_PATTERN: Never auto-play audio. If auto-play is required, provide a clearly visible and keyboard-accessible pause/stop/mute button at the top of the page or near the audio element. Add controls attribute to all <audio> and <video> elements.
+WCAG_TAGS: perceivable, distinguishable, audio, autoplay, controls
+---
+CRITERION: 1.4.3 Contrast (Minimum) (Level AA)
+DESCRIPTION: The visual presentation of text and images of text has a contrast ratio of at least 4.5:1, except for large text (3:1), text or images that are part of an inactive UI component, pure decoration, or logically required for specific appearance (logos).
+COMMON_VIOLATIONS: Light gray text on white background (e.g., #999 on #fff = 2.85:1), light colored text overlaid on light images, placeholder text that is too light, disabled-looking but active buttons with insufficient contrast.
+FIX_PATTERN: Use a color contrast checker to verify all text meets 4.5:1 ratio (or 3:1 for text >= 18pt or 14pt bold). Replace low-contrast colors: use #767676 or darker on white for gray text. For colored text on colored backgrounds, use tools like WebAIM Contrast Checker to find compliant alternatives.
+WCAG_TAGS: perceivable, distinguishable, contrast, color, text
+---
+CRITERION: 1.4.4 Resize Text (Level AA)
+DESCRIPTION: Except for captions and images of text, text can be resized without assistive technology up to 200 percent without loss of content or functionality.
+COMMON_VIOLATIONS: Fixed pixel font sizes that don't scale, overflow hidden containers that clip text when zoomed, JavaScript that resets zoom, layout that breaks at 200% zoom causing content loss.
+FIX_PATTERN: Use relative font units (rem, em) instead of fixed px for font sizes. Use flexible layout containers with overflow: auto or visible. Never use maximum-scale=1 or user-scalable=no in viewport meta tag. Test the page at 200% browser zoom.
+WCAG_TAGS: perceivable, distinguishable, resize, zoom, font-size
+---
+CRITERION: 1.4.5 Images of Text (Level AA)
+DESCRIPTION: If the technologies being used can achieve the visual presentation, text is used to convey information rather than images of text except for customizable text or essential imagery.
+COMMON_VIOLATIONS: Using images of styled text for headings or buttons instead of real text with CSS styling, logos containing essential text information without a text alternative.
+FIX_PATTERN: Replace images of text with real text styled with CSS. Use web fonts for custom typography. For logos containing text, provide an alt attribute that includes the text in the image.
+WCAG_TAGS: perceivable, distinguishable, images-of-text, fonts
+---
+CRITERION: 1.4.10 Reflow (Level AA)
+DESCRIPTION: Content can be presented without loss of information or functionality, and without requiring scrolling in two dimensions for vertical scrolling content at a width equivalent to 320 CSS pixels, and for horizontal scrolling content at a height equivalent to 256 CSS pixels.
+COMMON_VIOLATIONS: Fixed-width layouts that require horizontal scrolling at 320px viewport width, content that disappears or overlaps when zoomed to 400%, tables that require horizontal scrolling on mobile.
+FIX_PATTERN: Use responsive CSS with flexible widths, max-width, and CSS Grid/Flexbox. Use relative units. Test at 320px viewport width (equivalent to 400% zoom on 1280px display). Use overflow-x: auto on tables. Avoid position: fixed elements that block content at small sizes.
+WCAG_TAGS: perceivable, distinguishable, reflow, responsive, mobile, zoom
+---
+CRITERION: 1.4.11 Non-text Contrast (Level AA)
+DESCRIPTION: The visual presentation of user interface components and graphical objects has a contrast ratio of at least 3:1 against adjacent color(s).
+COMMON_VIOLATIONS: Form input borders that are too light against the background (e.g., light gray border on white), focus indicators with insufficient contrast, checkbox or radio button borders that are hard to see, chart lines or icons that don't meet 3:1 contrast.
+FIX_PATTERN: Ensure all form control borders, icons, and graphical elements have at least 3:1 contrast with adjacent backgrounds. Use #767676 or darker for gray UI elements on white. Increase border width for form controls. Test with contrast checking tools.
+WCAG_TAGS: perceivable, distinguishable, non-text-contrast, ui-components, icons, forms
+---
+CRITERION: 1.4.12 Text Spacing (Level AA)
+DESCRIPTION: In content implemented using markup languages, no loss of content or functionality occurs by setting: line height to at least 1.5 times the font size, letter spacing to at least 0.12 times the font size, word spacing to at least 0.16 times the font size, and spacing following paragraphs to at least 2 times the font size.
+COMMON_VIOLATIONS: Fixed-height containers with overflow: hidden that clip text when line height increases, CSS that overrides user-applied text spacing, content that overlaps when letter-spacing or word-spacing is increased.
+FIX_PATTERN: Avoid fixed heights on text containers. Use min-height instead of height. Do not use !important to override text spacing. Use overflow: visible or auto. Test by applying the Text Spacing bookmarklet from the WCAG Understanding document.
+WCAG_TAGS: perceivable, distinguishable, text-spacing, line-height, letter-spacing
+---
+CRITERION: 1.4.13 Content on Hover or Focus (Level AA)
+DESCRIPTION: Where receiving and then removing pointer hover or keyboard focus triggers additional content to become visible and then hidden, the following are true: the triggering component can be moved over without the additional content disappearing, the user can dismiss the additional content without moving focus, and the content remains visible as long as the user wishes.
+COMMON_VIOLATIONS: Tooltips that disappear immediately when the mouse moves toward them, hover menus that close when the user tries to move the mouse to them, popups that cannot be dismissed with Escape key.
+FIX_PATTERN: Implement tooltips and hover content with a "safe corridor" that keeps content visible when mouse moves toward it. Add pointer-events: auto to tooltip/popup. Allow dismissal via Escape key (add keydown event listener). Keep hover content visible while it has focus or hover.
+WCAG_TAGS: perceivable, distinguishable, hover, focus, tooltips, popups
+---
+CRITERION: 2.1.1 Keyboard (Level A)
+DESCRIPTION: All functionality of the content is operable through a keyboard interface without requiring specific timings for individual keystrokes, except where the underlying function requires input that depends on the path of the user's movement and not just the endpoints.
+COMMON_VIOLATIONS: Custom JavaScript widgets (carousels, date pickers, modals, dropdowns) not operable by keyboard, drag-and-drop interfaces without keyboard alternatives, onclick handlers on non-interactive elements (div, span) without keyboard support, mouse-only hover interactions.
+FIX_PATTERN: Ensure all interactive elements are natively focusable or have tabindex="0". Add keydown event handlers alongside onclick for custom widgets. Follow ARIA design patterns for common widgets (modal, menu, tabs, etc.). Provide keyboard alternatives for drag-and-drop. Never use tabindex="-1" on interactive controls (only for focus management).
+WCAG_TAGS: operable, keyboard-accessible, keyboard, focus, interactive
+---
+CRITERION: 2.1.2 No Keyboard Trap (Level A)
+DESCRIPTION: If keyboard focus can be moved to a component using a keyboard interface, then focus can be moved away from that component using only a keyboard interface. If it requires more than standard keystrokes, the user is advised of the method.
+COMMON_VIOLATIONS: Modal dialogs that trap focus and don't allow Escape to close, embedded media players that trap Tab key, custom widgets that intercept arrow keys without releasing them, iframe content that cannot be exited.
+FIX_PATTERN: For modals: trap focus intentionally inside (cycle through focusable elements) but allow Escape to close and return focus to trigger. Use a focus trap library or implement manually. For other widgets: allow Escape or Tab to exit. Test all interactive components by tabbing through them.
+WCAG_TAGS: operable, keyboard-accessible, keyboard-trap, modal, focus
+---
+CRITERION: 2.1.4 Character Key Shortcuts (Level A)
+DESCRIPTION: If a keyboard shortcut is implemented in content using only letter, punctuation, number, or symbol characters, then either a mechanism is available to turn off the shortcut, remap the shortcut, or the shortcut is only active when the relevant user interface component has focus.
+COMMON_VIOLATIONS: Single-key keyboard shortcuts (like pressing 'S' to search) that fire globally and interfere with screen reader shortcuts or dictation software.
+FIX_PATTERN: Either avoid single-character shortcuts, require a modifier key (Ctrl, Alt, Meta), or provide a user preference to disable/remap shortcuts. If shortcuts must be single-key, scope them to components that have focus rather than document-level.
+WCAG_TAGS: operable, keyboard-accessible, shortcuts, keyboard
+---
+CRITERION: 2.2.1 Timing Adjustable (Level A)
+DESCRIPTION: For each time limit that is set by the content, the user can turn off, adjust, or extend the time limit, except for real-time events or essential time limits.
+COMMON_VIOLATIONS: Session timeout with no warning, auto-submitting forms after a time limit, content that disappears after a fixed time, CAPTCHA with strict time limits, timed assessments without extension options.
+FIX_PATTERN: Warn users at least 20 seconds before a session timeout with a dialog. Allow at least 10 requests for extension. Allow users to turn off, adjust, or extend time limits in settings. Provide a session-extension button in the timeout warning.
+WCAG_TAGS: operable, enough-time, timing, session-timeout
+---
+CRITERION: 2.2.2 Pause, Stop, Hide (Level A)
+DESCRIPTION: For moving, blinking, scrolling, or auto-updating information, the user can pause, stop, or hide the movement, or control the frequency of updates, unless the movement is essential.
+COMMON_VIOLATIONS: Animated carousels without pause button, auto-scrolling news tickers, infinite animations with no stop control, auto-refreshing content without user control, CSS animations that can't be paused.
+FIX_PATTERN: Add a pause/stop button for any animated content lasting more than 5 seconds. Use the prefers-reduced-motion media query to disable non-essential animations. For carousels, add explicit Previous/Next controls and a pause button. For auto-updating data, provide a user-controlled refresh option.
+WCAG_TAGS: operable, enough-time, animation, carousel, pause, auto-update
+---
+CRITERION: 2.3.1 Three Flashes or Below Threshold (Level A)
+DESCRIPTION: Web pages do not contain anything that flashes more than three times in any one second period, or the flash is below the general flash and red flash thresholds.
+COMMON_VIOLATIONS: Animated GIFs or CSS animations with rapid flashing, video content with strobe effects, auto-playing banner ads with flashing content.
+FIX_PATTERN: Never create content that flashes more than 3 times per second. Use animation-timing-function and animation-duration to ensure no more than 3 flashes per second. Test with the Photosensitive Epilepsy Analysis Tool (PEAT) or Harding Test.
+WCAG_TAGS: operable, seizures, flashing, animation
+---
+CRITERION: 2.4.1 Bypass Blocks (Level A)
+DESCRIPTION: A mechanism is available to bypass blocks of content that are repeated on multiple Web pages.
+COMMON_VIOLATIONS: No skip navigation link, repeated navigation menus with no way to skip them, pages without proper heading structure to allow navigation by screen reader.
+FIX_PATTERN: Add a "Skip to main content" link as the first element in <body>. It can be visually hidden (visible only on focus) using CSS. The link target should be the <main> element with id="main-content". Example: <a href="#main-content" class="skip-link">Skip to main content</a>.
+WCAG_TAGS: operable, navigable, skip-navigation, bypass, main-content
+---
+CRITERION: 2.4.2 Page Titled (Level A)
+DESCRIPTION: Web pages have titles that describe topic or purpose.
+COMMON_VIOLATIONS: Missing <title> element in <head>, generic title like "Page 1" or "Untitled", same title on every page of a multi-page site, title that doesn't match the page content.
+FIX_PATTERN: Add a descriptive <title> to every HTML page in <head>. Format: "Page Name | Site Name". Each page should have a unique, descriptive title. The most specific information should come first.
+WCAG_TAGS: operable, navigable, page-title, head
+---
+CRITERION: 2.4.3 Focus Order (Level A)
+DESCRIPTION: If a Web page can be navigated sequentially and the navigation sequences affect meaning or operation, focusable components receive focus in an order that preserves meaning and operation.
+COMMON_VIOLATIONS: Modal dialogs where focus goes to the back of the page instead of inside the modal, dynamic content inserted into the DOM at the beginning but focused elements are still at the end, custom tab orders with positive tabindex values that create confusing sequences.
+FIX_PATTERN: Follow natural DOM order for focus. Avoid positive tabindex values (use tabindex="0" or "-1" only). When opening modals, move focus to the first interactive element inside. When closing, return focus to the trigger. When inserting dynamic content, move focus to the new content or a relevant element near it.
+WCAG_TAGS: operable, navigable, focus-order, tabindex, modal
+---
+CRITERION: 2.4.4 Link Purpose (Link Only) (Level A)
+DESCRIPTION: The purpose of each link can be determined from the link text alone, or from the link text together with its programmatically determined link context, except where the purpose of the link would be ambiguous to users in general.
+COMMON_VIOLATIONS: Generic link text like "click here", "read more", "learn more", "here", "this link" without context, multiple "read more" links on the same page going to different destinations, links that just say "download" without specifying what.
+FIX_PATTERN: Write descriptive link text that makes sense out of context: "Read our accessibility guide", "Download the 2024 Annual Report (PDF)", "Learn more about WCAG 2.2". If the visual design requires short text, use aria-label to add a longer description: <a href="..." aria-label="Read more about our accessibility policy">Read more</a>.
+WCAG_TAGS: operable, navigable, link-text, descriptive-links
+---
+CRITERION: 2.4.5 Multiple Ways (Level AA)
+DESCRIPTION: More than one way is available to locate a Web page within a set of Web pages except where the Web Page is the result of, or a step in, a process.
+COMMON_VIOLATIONS: Single-page sites without a sitemap or search functionality, complex sites with only one navigation path, no site search or sitemap provided.
+FIX_PATTERN: Provide at least two of: navigation menu, site search, sitemap, table of contents, or breadcrumb navigation. Ensure each page is reachable through multiple paths where possible.
+WCAG_TAGS: operable, navigable, multiple-ways, sitemap, search, navigation
+---
+CRITERION: 2.4.6 Headings and Labels (Level AA)
+DESCRIPTION: Headings and labels describe topic or purpose.
+COMMON_VIOLATIONS: Generic heading text like "Section 1", form labels that just say "Enter text", headings used for styling rather than structure, labels that don't describe the input's purpose.
+FIX_PATTERN: Write descriptive headings that summarize section content. Write form labels that clearly identify what information is needed. Example: instead of "Name" use "Full Name (as it appears on your ID)". Headings should reflect the actual content of the section.
+WCAG_TAGS: operable, navigable, headings, labels, forms, descriptive
+---
+CRITERION: 2.4.7 Focus Visible (Level AA)
+DESCRIPTION: Any keyboard operable user interface has a mode of operation where the keyboard focus indicator is visible.
+COMMON_VIOLATIONS: CSS that removes focus outlines with outline: none or outline: 0 without providing a replacement, focus styles too subtle to see (e.g., very light dotted outline), no visible focus indicator on custom interactive elements.
+FIX_PATTERN: Never remove focus outlines without providing a clearly visible alternative. Provide high-contrast focus styles: outline: 3px solid #0056b3; outline-offset: 2px; or a background-color change. Ensure the focus indicator meets 3:1 contrast ratio against adjacent colors. Test all interactive elements by tabbing through the page.
+WCAG_TAGS: operable, navigable, focus-visible, focus-outline, keyboard
+---
+CRITERION: 2.4.11 Focus Not Obscured (Minimum) (Level AA)
+DESCRIPTION: When a user interface component receives keyboard focus, the component is not entirely hidden due to author-created content.
+COMMON_VIOLATIONS: Sticky headers or footers that overlap focused elements, cookie banners that cover form controls, fixed navigation that hides focused links, floating chat widgets that block focused elements.
+FIX_PATTERN: Use scroll-padding-top on the page or scroll-margin on focusable elements to account for fixed headers. Ensure focused elements are scrolled into view and not hidden behind sticky UI. Add scroll-padding-top equal to the height of any fixed header element.
+WCAG_TAGS: operable, navigable, focus-obscured, sticky-header, scroll
+---
+CRITERION: 2.5.1 Pointer Gestures (Level A)
+DESCRIPTION: All functionality that uses multipoint or path-based gestures for operation can be operated with a single pointer without a path-based gesture, unless a multipoint or path-based gesture is essential.
+COMMON_VIOLATIONS: Pinch-to-zoom gestures without single-tap alternatives, swipe-only carousels without button alternatives, draw-to-select interfaces without click alternatives.
+FIX_PATTERN: Provide single-tap/click alternatives for all swipe and multi-point gestures. Add Previous/Next buttons to carousels in addition to swipe. Ensure map controls have +/- buttons. Never make path-based gestures the only way to perform an action.
+WCAG_TAGS: operable, input-modalities, pointer, gestures, touch, mobile
+---
+CRITERION: 2.5.2 Pointer Cancellation (Level A)
+DESCRIPTION: For functionality that can be operated using a single pointer, at least one of the following is true: No Down-Event (activation on up-event), Abort or Undo (up-event can abort), Up Reversal (deactivation on up-event), or Essential (down-event is essential).
+COMMON_VIOLATIONS: Buttons or controls that activate on mousedown/touchstart instead of mouseup/touchend, drag operations that cannot be aborted, accidental activations that cannot be undone.
+FIX_PATTERN: Use click events (which fire on mouseup) instead of mousedown for activating actions. For drag operations, allow cancellation by releasing outside the drop target or pressing Escape. Avoid binding critical functionality to the down event.
+WCAG_TAGS: operable, input-modalities, pointer-cancellation, click, mousedown
+---
+CRITERION: 2.5.3 Label in Name (Level A)
+DESCRIPTION: For user interface components with labels that include text or images of text, the name contains the text that is presented visually.
+COMMON_VIOLATIONS: Buttons with visible text "Submit Form" but aria-label="send", icon buttons with aria-label that doesn't include the visible text label, custom components where the accessible name doesn't match the visible text.
+FIX_PATTERN: Ensure the accessible name of any control starts with or contains its visible text label. If a button shows "Search" visually, its aria-label (if used) should start with "Search". Prefer using the visible text directly rather than overriding it with aria-label.
+WCAG_TAGS: operable, input-modalities, label-in-name, aria-label, visible-text
+---
+CRITERION: 2.5.4 Motion Actuation (Level A)
+DESCRIPTION: Functionality that can be operated by device motion or user motion can also be operated by user interface components, and responding to the motion can be disabled to prevent accidental actuation.
+COMMON_VIOLATIONS: Shake to undo with no UI button equivalent, tilt-to-scroll without an alternative, device orientation-based navigation with no button fallback.
+FIX_PATTERN: Provide UI button alternatives for all motion-based interactions. Allow users to disable motion actuation. Never make device motion the only way to perform a critical action.
+WCAG_TAGS: operable, input-modalities, motion, device-orientation, mobile
+---
+CRITERION: 3.1.1 Language of Page (Level A)
+DESCRIPTION: The default human language of each Web page can be programmatically determined.
+COMMON_VIOLATIONS: Missing lang attribute on the <html> element, incorrect language code (e.g., lang="en-US" is fine but lang="english" is invalid), HTML pages served without a lang attribute.
+FIX_PATTERN: Add the lang attribute to the root <html> element with the appropriate BCP 47 language tag. Example: <html lang="en"> for English, <html lang="fr"> for French, <html lang="es"> for Spanish. This allows screen readers to use the correct pronunciation rules and language-specific text-to-speech voice.
+WCAG_TAGS: understandable, readable, language, html-lang, accessibility
+---
+CRITERION: 3.1.2 Language of Parts (Level AA)
+DESCRIPTION: The human language of each passage or phrase in the content can be programmatically determined except for proper names, technical terms, words of indeterminate language, and words or phrases that have become part of the vernacular of the immediately surrounding text.
+COMMON_VIOLATIONS: Foreign language quotes or phrases embedded in an English page without a lang attribute, multilingual pages without language markers on individual language sections.
+FIX_PATTERN: Add a lang attribute to any inline or block element containing content in a different language than the page default. Example: <span lang="fr">Bonjour le monde</span> on an English page. This ensures screen readers switch to the correct voice/language for that passage.
+WCAG_TAGS: understandable, readable, language, lang-attribute, multilingual
+---
+CRITERION: 3.2.1 On Focus (Level A)
+DESCRIPTION: If any component receives focus, it does not initiate a change of context.
+COMMON_VIOLATIONS: Dropdowns that automatically navigate to a new page when an option receives focus, modals that open when a form field is focused, automatic form submission when the last field is focused.
+FIX_PATTERN: Never trigger navigation, form submission, or major context changes from focus events alone. Require explicit user activation (click, Enter, Space) to trigger significant actions. Focus events should only show tooltips or highlight elements, not navigate or submit.
+WCAG_TAGS: understandable, predictable, focus, context-change, auto-submit
+---
+CRITERION: 3.2.2 On Input (Level A)
+DESCRIPTION: Changing the setting of any user interface component does not automatically cause a change of context unless the user has been advised of the behavior before using the component.
+COMMON_VIOLATIONS: Form that automatically submits when the last radio button or checkbox is selected, dropdowns/select menus that navigate to a new page immediately on selection change without a Submit button, auto-advancing between form steps without user confirmation.
+FIX_PATTERN: Require explicit submission action (button click) to submit forms or navigate. If automatic behavior is used, warn the user in advance (e.g., "Selecting a category will update the page"). Do not use onchange on select to navigate unless it's expected behavior clearly communicated.
+WCAG_TAGS: understandable, predictable, input, context-change, select, forms
+---
+CRITERION: 3.2.3 Consistent Navigation (Level AA)
+DESCRIPTION: Navigational mechanisms that are repeated on multiple Web pages within a set of Web pages occur in the same relative order each time they are repeated, unless a change is initiated by the user.
+COMMON_VIOLATIONS: Navigation menu items in different order on different pages, footer links rearranged on certain pages, search bar that appears in different positions across pages.
+FIX_PATTERN: Keep navigation menus, search bars, and repeated UI elements in the same position and order across all pages. Use shared layout components or templates. Only allow users to rearrange UI if they explicitly choose to customize their experience.
+WCAG_TAGS: understandable, predictable, consistent-navigation, layout
+---
+CRITERION: 3.2.4 Consistent Identification (Level AA)
+DESCRIPTION: Components that have the same functionality within a set of Web pages are identified consistently.
+COMMON_VIOLATIONS: A search function labeled "Find" on one page and "Search" on another, icons that represent different functions on different pages, buttons for the same action with different labels across pages.
+FIX_PATTERN: Use consistent labels, icons, and aria-labels for components with the same functionality across all pages. Document and reuse UI patterns. A "Search" button should always say "Search" and always function the same way.
+WCAG_TAGS: understandable, predictable, consistent-identification, labels
+---
+CRITERION: 3.3.1 Error Identification (Level A)
+DESCRIPTION: If an input error is automatically detected, the item that is in error is identified and the error is described to the user in text.
+COMMON_VIOLATIONS: Form validation that only uses color (red border) to indicate errors, error messages that just say "Invalid input" without specifying what is wrong, errors indicated only by icons without text, dynamic error messages not announced to screen readers.
+FIX_PATTERN: Clearly identify which field has an error (using aria-invalid="true" and aria-describedby linking to the error message). Write descriptive error messages that explain what is wrong and how to fix it. Example: "Email address must include an @ symbol." Use role="alert" or aria-live="assertive" on error message containers so screen readers announce them.
+WCAG_TAGS: understandable, input-assistance, error-identification, forms, aria-invalid, alert
+---
+CRITERION: 3.3.2 Labels or Instructions (Level A)
+DESCRIPTION: Labels or instructions are provided when content requires user input.
+COMMON_VIOLATIONS: Form fields without visible labels (using only placeholder text as a label), inputs without format instructions (e.g., date fields without format hint like MM/DD/YYYY), password fields without length/complexity requirements shown, complex forms without instructions.
+FIX_PATTERN: Always provide a visible <label> for every form control. Never rely solely on placeholder text as a label (placeholder disappears on input). Provide format hints for complex inputs: "Date (MM/DD/YYYY)", "Phone (xxx-xxx-xxxx)". Show password requirements before the user submits.
+WCAG_TAGS: understandable, input-assistance, labels, instructions, placeholder, forms
+---
+CRITERION: 3.3.3 Error Suggestion (Level AA)
+DESCRIPTION: If an input error is automatically detected and suggestions for correction are known, then the suggestion is provided to the user, unless it would jeopardize the security or purpose of the content.
+COMMON_VIOLATIONS: Error messages that identify the error but don't suggest how to fix it, "Invalid date" error without explaining the required format, "Password too short" without specifying the minimum length.
+FIX_PATTERN: Include corrective suggestions in error messages: "Email address is invalid. Please enter an address in the format: name@example.com", "Password must be at least 8 characters. You entered 5 characters." Provide autocomplete suggestions where appropriate.
+WCAG_TAGS: understandable, input-assistance, error-suggestion, forms, validation
+---
+CRITERION: 3.3.4 Error Prevention (Legal, Financial, Data) (Level AA)
+DESCRIPTION: For Web pages that cause legal commitments or financial transactions for the user to occur, that modify or delete user-controllable data in data storage systems, or that submit user test responses, submissions are reversible, checked, or confirmed.
+COMMON_VIOLATIONS: Purchase or booking flows with no confirmation step, forms that delete data without an "Are you sure?" dialog, account deletion with immediate action and no undo, financial transactions that cannot be cancelled.
+FIX_PATTERN: Add a confirmation step before irreversible actions. Provide a review screen before submitting financial or legal forms. Allow users to cancel or modify submissions before they are final. Offer a time-limited undo option where possible (e.g., "This action cannot be undone. Are you sure?" dialog with Cancel and Confirm buttons).
+WCAG_TAGS: understandable, input-assistance, error-prevention, confirmation, undo, transactions
+---
+CRITERION: 4.1.1 Parsing (Level A)
+DESCRIPTION: In content implemented using markup languages, elements have complete start and end tags, elements are nested according to their specifications, elements do not contain duplicate attributes, and any IDs are unique.
+COMMON_VIOLATIONS: Duplicate id attributes on multiple elements, unclosed HTML tags, improperly nested elements (e.g., block elements inside inline elements), attributes specified multiple times on the same element.
+FIX_PATTERN: Validate HTML using the W3C Markup Validation Service. Ensure all IDs are unique across the page. Close all HTML tags properly. Don't duplicate attributes. Use a linter to catch nesting errors. Unique IDs are especially important for ARIA relationships (aria-labelledby, aria-describedby).
+WCAG_TAGS: robust, compatible, parsing, html-validation, duplicate-id, nesting
+---
+CRITERION: 4.1.2 Name, Role, Value (Level A)
+DESCRIPTION: For all user interface components, the name and role can be programmatically determined; states, properties, and values that can be set by the user can be programmatically determined; and notification of changes to these items is available to user agents, including assistive technologies.
+COMMON_VIOLATIONS: Custom interactive widgets (div buttons, span links) without role, aria-label, or keyboard support, toggle buttons without aria-pressed state, expandable sections without aria-expanded, checkboxes implemented as divs without role="checkbox" and aria-checked, icon-only buttons without accessible name.
+FIX_PATTERN: Use native HTML elements where possible (<button>, <a>, <input>, <select>). For custom widgets, add appropriate ARIA roles (role="button", role="checkbox", role="tabpanel", etc.), accessible names (aria-label or aria-labelledby), and state attributes (aria-pressed, aria-expanded, aria-checked, aria-selected). Update ARIA state attributes dynamically when state changes.
+WCAG_TAGS: robust, compatible, aria, role, name, state, custom-widgets
+---
+CRITERION: 4.1.3 Status Messages (Level AA)
+DESCRIPTION: In content implemented using markup languages, status messages can be programmatically determined through role or properties such that they can be presented to the user by assistive technologies without receiving focus.
+COMMON_VIOLATIONS: Success messages or cart updates that appear visually but are not announced to screen readers, loading spinners without aria-live announcements, form submission confirmation messages that don't get announced, search results count not announced to screen reader users.
+FIX_PATTERN: Use aria-live="polite" for non-urgent status messages (success confirmations, search result counts). Use aria-live="assertive" or role="alert" for urgent messages (error alerts). Use role="status" for general status messages. Ensure the live region exists in the DOM before content is added to it — inject content into an existing live region element.
+WCAG_TAGS: robust, compatible, status-messages, aria-live, alert, screen-reader
+---

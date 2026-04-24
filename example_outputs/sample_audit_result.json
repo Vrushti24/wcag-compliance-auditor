@@ -1,0 +1,146 @@
+{
+  "audit_id": "f3c4e7b2-9a1d-4b8e-a2f0-c6d8e9f0a1b2",
+  "input_type": "html",
+  "original_html": "<!DOCTYPE html>\n<html>\n<head><title>Sample Page</title></head>\n<body>\n  <img src=\"hero.jpg\" width=\"800\">\n  <p style=\"color:#aaa; background:#fff\">Welcome to our site</p>\n  <input type=\"text\" placeholder=\"Enter name\">\n  <button></button>\n  <a href=\"#\">Click here</a>\n  <h1>Title</h1>\n  <h4>Subtitle</h4>\n</body>\n</html>",
+  "violations": [
+    {
+      "violation_id": "1.1.1",
+      "severity": "critical",
+      "element": "<img src=\"hero.jpg\" width=\"800\">",
+      "description": "Image is missing an alt attribute. Screen reader users will have no way to understand what this image shows.",
+      "wcag_principle": "Perceivable"
+    },
+    {
+      "violation_id": "1.4.3",
+      "severity": "serious",
+      "element": "<p style=\"color:#aaa; background:#fff\">",
+      "description": "Text color #aaa on background #fff has a contrast ratio of approximately 2.32:1, which fails the minimum requirement of 4.5:1 for normal text.",
+      "wcag_principle": "Perceivable"
+    },
+    {
+      "violation_id": "1.3.1",
+      "severity": "serious",
+      "element": "<input type=\"text\" placeholder=\"Enter name\">",
+      "description": "Form input has no associated label element. Users of screen readers and voice input software cannot identify the purpose of this field.",
+      "wcag_principle": "Perceivable"
+    },
+    {
+      "violation_id": "4.1.2",
+      "severity": "critical",
+      "element": "<button></button>",
+      "description": "Button has no accessible name. Screen readers will announce this as 'button' with no indication of what it does.",
+      "wcag_principle": "Robust"
+    },
+    {
+      "violation_id": "2.4.4",
+      "severity": "serious",
+      "element": "<a href=\"#\">Click here</a>",
+      "description": "Link text 'Click here' is not descriptive. Screen reader users navigating by links cannot determine the destination or purpose.",
+      "wcag_principle": "Operable"
+    },
+    {
+      "violation_id": "3.1.1",
+      "severity": "moderate",
+      "element": "<html>",
+      "description": "The html element is missing a lang attribute. Screen readers cannot select the correct language voice or pronunciation rules.",
+      "wcag_principle": "Understandable"
+    },
+    {
+      "violation_id": "1.3.1",
+      "severity": "moderate",
+      "element": "<h1>Title</h1> then <h4>Subtitle</h4>",
+      "description": "Heading levels skip from h1 to h4. This breaks the logical document outline and confuses screen reader navigation.",
+      "wcag_principle": "Perceivable"
+    }
+  ],
+  "fixed_html": "<!DOCTYPE html>\n<!-- FIXED: 3.1.1 - Added lang attribute to html element -->\n<html lang=\"en\">\n<head><title>Sample Page</title></head>\n<body>\n  <!-- FIXED: 1.1.1 - Added descriptive alt text to image -->\n  <img src=\"hero.jpg\" width=\"800\" alt=\"Hero banner image showing the main feature of our website\">\n\n  <!-- FIXED: 1.4.3 - Changed text color from #aaa to #555 to meet 4.5:1 contrast ratio -->\n  <p style=\"color:#555555; background:#ffffff\">Welcome to our site</p>\n\n  <!-- FIXED: 1.3.1 - Added associated label for the input field -->\n  <div>\n    <label for=\"name-input\">Your Name</label>\n    <input type=\"text\" id=\"name-input\" placeholder=\"Enter name\" autocomplete=\"name\">\n  </div>\n\n  <!-- FIXED: 4.1.2 - Added descriptive text and aria-label to empty button -->\n  <button aria-label=\"Submit the form\">Submit</button>\n\n  <!-- FIXED: 2.4.4 - Replaced non-descriptive 'Click here' with meaningful link text -->\n  <a href=\"#\">Learn more about our services</a>\n\n  <h1>Title</h1>\n  <!-- FIXED: 1.3.1 - Changed h4 to h2 to maintain sequential heading hierarchy -->\n  <h2>Subtitle</h2>\n</body>\n</html>",
+  "explanations": [
+    {
+      "violation_id": "1.1.1",
+      "explanation": "The image on your page had no alt text, which means screen reader users — people who are blind or have low vision — would hear 'image' with no description of what the image shows. We added a descriptive alt attribute so screen readers can tell users what the image contains, making your content accessible to everyone."
+    },
+    {
+      "violation_id": "1.4.3",
+      "explanation": "Your text was light gray (#aaa) on a white background, giving a contrast ratio of only 2.32:1 — less than half the required 4.5:1. This makes text very difficult to read for people with low vision, color blindness, or anyone viewing in bright sunlight. We darkened the text color to #555555 which passes the WCAG contrast requirement."
+    },
+    {
+      "violation_id": "1.3.1",
+      "explanation": "Your text input had no label, so people using screen readers or voice input software (like Dragon NaturallySpeaking) had no way to know what information to enter. We added a visible label element and connected it to the input with matching for/id attributes so everyone can understand what the field is for."
+    },
+    {
+      "violation_id": "4.1.2",
+      "explanation": "Your button had no text or accessible name, so screen reader users would only hear 'button' with no clue what it does. We added visible text 'Submit' and an aria-label so assistive technologies can clearly announce the button's purpose."
+    },
+    {
+      "violation_id": "2.4.4",
+      "explanation": "The link text 'Click here' is meaningless without visual context — screen reader users often browse by jumping between links, and 'Click here' tells them nothing about where the link goes. We replaced it with descriptive text that makes sense on its own."
+    },
+    {
+      "violation_id": "3.1.1",
+      "explanation": "Your HTML page was missing the lang attribute on the <html> element. Without it, screen readers may use the wrong language voice, making your content sound garbled or mispronounced to users with visual impairments. We added lang='en' to ensure the correct voice is used."
+    }
+  ],
+  "metrics": {
+    "before": {
+      "total_violations": 7,
+      "violations_by_severity": {
+        "critical": 2,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      },
+      "violations_by_principle": {
+        "Perceivable": 4,
+        "Operable": 1,
+        "Understandable": 1,
+        "Robust": 1
+      },
+      "wcag_pass_rate": 0.0,
+      "accessibility_score": 11
+    },
+    "after": {
+      "total_violations": 0,
+      "violations_by_severity": {
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      },
+      "violations_by_principle": {
+        "Perceivable": 0,
+        "Operable": 0,
+        "Understandable": 0,
+        "Robust": 0
+      },
+      "wcag_pass_rate": 100.0,
+      "accessibility_score": 100
+    },
+    "improvement": {
+      "violations_fixed": 7,
+      "violations_remaining": 0,
+      "before_score": 11,
+      "after_score": 100,
+      "score_improvement": 89,
+      "fix_success_rate": 100.0,
+      "before_pass_rate": 0.0,
+      "after_pass_rate": 100.0
+    }
+  },
+  "retrieved_wcag_criteria": [
+    {
+      "criterion": "1.1.1 Non-text Content (Level A)",
+      "tags": "perceivable, text-alternative, images, icons, svg, canvas",
+      "similarity_score": 0.9123
+    },
+    {
+      "criterion": "1.4.3 Contrast (Minimum) (Level AA)",
+      "tags": "perceivable, distinguishable, contrast, color, text",
+      "similarity_score": 0.8876
+    },
+    {
+      "criterion": "1.3.1 Info and Relationships (Level A)",
+      "tags": "perceivable, adaptable, semantic-html, forms, tables, headings, lists",
+      "similarity_score": 0.8654
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+.url-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.url-input-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.url-input-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sample-urls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.url-field-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--bg-code);
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.url-field-wrapper:focus-within {
+  border-color: var(--accent-teal);
+  box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.15);
+}
+
+.url-prefix {
+  padding: 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-teal);
+  background: var(--bg-elevated);
+  border-right: 1.5px solid var(--border-color);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+  min-height: 44px;
+}
+
+.url-field {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  min-height: 44px;
+}
+
+.url-field::placeholder {
+  color: var(--text-muted);
+}
+
+.input-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}

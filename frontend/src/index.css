@@ -1,0 +1,68 @@
+:root {
+  --bg-primary: #0a0f1e;
+  --bg-secondary: #0f1629;
+  --bg-card: #131d35;
+  --bg-elevated: #1a2540;
+  --accent-teal: #00d4aa;
+  --accent-teal-dim: #00a888;
+  --accent-teal-glow: rgba(0, 212, 170, 0.15);
+  --text-primary: #e8edf8;
+  --text-secondary: #8a9bbf;
+  --text-muted: #4a5a7a;
+  --border: #1e2d4a;
+  --border-bright: #2a3f6a;
+  --severity-critical: #ff4757;
+  --severity-serious: #ff7f3f;
+  --severity-moderate: #ffa502;
+  --severity-minor: #4a9eff;
+  --font-heading: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-bright);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-teal-dim);
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--accent-teal);
+  outline-offset: 2px;
+}

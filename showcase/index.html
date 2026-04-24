@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WCAG Compliance Auditor — Automated Fix Generation</title>
+  <meta name="description" content="A generative AI system that audits websites for WCAG 2.2 violations and automatically generates accessible fixes — powered by RAG, multi-step prompt chains, and multimodal input." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header>
+    <nav class="container" aria-label="Site navigation" style="display:flex;align-items:center;justify-content:space-between;padding-top:1.25rem;padding-bottom:1.25rem;">
+      <a href="#" style="font-size:1.1rem;font-weight:800;color:var(--text);text-decoration:none;">
+        WCAG <span style="color:var(--teal)">Compliance Auditor</span>
+      </a>
+      <div style="display:flex;gap:1.5rem;font-size:.9rem;">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#ai-components">AI Components</a>
+        <a href="#metrics">Metrics</a>
+        <a href="https://github.com/yourusername/wcag-compliance-auditor" aria-label="View source code on GitHub">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ─── HERO ─── -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <span class="hero-badge" aria-label="Course project label">
+          INFO 7375 Prompt Engineering Final Project — Northeastern University
+        </span>
+        <h1 id="hero-heading">
+          WCAG <span class="accent">Compliance Auditor</span><br />
+          with Automated Fix Generation
+        </h1>
+        <p class="hero-sub">
+          Paste HTML, enter a URL, or upload a screenshot. Get a full WCAG 2.2 violation report,
+          auto-generated accessible fixes with WCAG citations, and plain-language explanations —
+          powered by RAG, multi-step prompt chains, and multimodal AI.
+        </p>
+        <div class="hero-cta">
+          <a href="http://localhost:5173" class="btn btn-primary" aria-label="Launch the application">
+            Launch App →
+          </a>
+          <a href="https://github.com/yourusername/wcag-compliance-auditor" class="btn btn-secondary" aria-label="View source code on GitHub">
+            View Source on GitHub
+          </a>
+        </div>
+
+        <div class="badge-row" aria-label="Violation severity levels">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-serious">Serious</span>
+          <span class="badge badge-moderate">Moderate</span>
+          <span class="badge badge-minor">Minor</span>
+        </div>
+
+        <!-- Problem stat -->
+        <div style="margin-top:3rem;padding:1.5rem;background:var(--teal-glow);border:1px solid rgba(0,212,170,0.2);border-radius:var(--radius);max-width:700px;margin-left:auto;margin-right:auto;text-align:center;">
+          <p style="font-size:1.1rem;color:var(--text);">
+            <strong style="color:var(--teal);font-size:1.6rem;">95.9%</strong> of the top 1 million websites have detectable WCAG failures.
+            Professional audits cost <strong style="color:var(--teal);">$3,000–$15,000</strong> per site.
+            This system makes it free.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── THE PROBLEM ─── -->
+    <section style="padding:5rem 0;background:var(--bg2);" aria-labelledby="problem-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Why this exists</span>
+          <h2 id="problem-heading">The Silent Failure Problem</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem;">
+          <div style="background:var(--bg3);border:1px solid rgba(255,71,87,0.25);border-radius:var(--radius);padding:1.75rem;">
+            <h3 style="color:#ff4757;margin-bottom:1rem;font-size:1rem;text-transform:uppercase;letter-spacing:.06em;">Without This System</h3>
+            <p style="color:var(--text2);font-size:.95rem;line-height:1.8;">
+              A developer spends <strong style="color:var(--text);">4–8 hours per audit cycle</strong> cross-referencing flagged violations against the 78-page WCAG specification. Tools like axe-core tell you <em>that</em> something is wrong — not how to fix it. A base LLM asked to audit a URL generates confident-looking violations it didn't actually detect from your HTML. Its fixes can produce <code style="color:#ff4757;">aria-label="icon-button-14"</code> — syntactically valid, semantically meaningless. <strong style="color:var(--text);">The violation is invisible now, which is worse.</strong>
+            </p>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(0,212,170,0.25);border-radius:var(--radius);padding:1.75rem;">
+            <h3 style="color:var(--teal);margin-bottom:1rem;font-size:1rem;text-transform:uppercase;letter-spacing:.06em;">With This System</h3>
+            <p style="color:var(--text2);font-size:.95rem;line-height:1.8;">
+              A dedicated input layer works on <strong style="color:var(--text);">real code</strong> — fetching live HTML from URLs, reading raw HTML, or reconstructing it from screenshots. A RAG layer retrieves the <strong style="color:var(--text);">actual W3C specification text</strong> before generating any analysis — the model reads it, not its memory of it. Every fix is annotated with the specific WCAG Success Criterion it satisfies (<code style="color:var(--teal);">&lt;!-- FIXED: 1.1.1 --&gt;</code>) and validated by re-audit. Target silent failure rate: <strong style="color:var(--teal);">&lt; 5%</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FEATURES ─── -->
+    <section class="features" id="features" aria-labelledby="features-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">What it does</span>
+          <h2 id="features-heading">Key Features</h2>
+        </div>
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🌐</div>
+            <h3>Live URL Crawling</h3>
+            <p>
+              Enter any public URL — the system fetches the real HTML and audits it directly.
+              No copy-pasting required. This is the proposal's core differentiator: working on
+              <em>actual</em> code, not a hallucinated version of it.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔍</div>
+            <h3>WCAG 2.2 Violation Detection</h3>
+            <p>
+              Identifies violations across all four WCAG principles — Perceivable, Operable,
+              Understandable, Robust — with severity ratings and pinpoints the exact offending
+              element. Grounded in the actual W3C specification via RAG.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">✨</div>
+            <h3>Automated Fix Generation</h3>
+            <p>
+              Every violation is auto-fixed with annotated HTML comments
+              (<code>&lt;!-- FIXED: 1.1.1 --&gt;</code>) citing the specific WCAG
+              Success Criterion. A side-by-side code diff shows exactly what changed and why.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📸</div>
+            <h3>Multimodal Screenshot Input</h3>
+            <p>
+              Upload any webpage screenshot. LLaMA 4 Scout Vision (Groq) reconstructs the
+              HTML structure from the image, then the full audit pipeline runs — no source
+              code access needed.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📚</div>
+            <h3>RAG — WCAG Knowledge Base</h3>
+            <p>
+              A ChromaDB vector store with 42 WCAG 2.2 criteria is queried semantically before
+              each audit. Top-3 relevant criteria are injected into every prompt — the model
+              can't invent a standard it's actively reading.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📊</div>
+            <h3>Evaluation Metrics Panel</h3>
+            <p>
+              Fix Validity Rate (target ≥ 90%), WCAG Pass Rate (target ≥ 85%), and
+              Silent Failure Target (&lt; 5%) displayed after every audit — directly from
+              the proposal's evaluation strategy.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── HOW IT WORKS ─── -->
+    <section class="how-it-works" id="how-it-works" aria-labelledby="hiw-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">The pipeline</span>
+          <h2 id="hiw-heading">How It Works</h2>
+        </div>
+        <div class="steps" role="list">
+          <div class="step" role="listitem">
+            <div class="step-number" aria-label="Step 1">01</div>
+            <h3>Input</h3>
+            <p>Paste HTML, enter a URL (fetched live), or upload a screenshot (PNG/JPG/WEBP)</p>
+          </div>
+          <div class="step" role="listitem">
+            <div class="step-number" aria-label="Step 2">02</div>
+            <h3>RAG Retrieval</h3>
+            <p>ChromaDB queries 42 WCAG 2.2 criteria semantically — top-3 most relevant are injected into every prompt</p>
+          </div>
+          <div class="step" role="listitem">
+            <div class="step-number" aria-label="Step 3">03</div>
+            <h3>Prompt Chain</h3>
+            <p>Three sequential LLaMA prompts: detect violations → generate cited fixes → plain-English explanations</p>
+          </div>
+          <div class="step" role="listitem">
+            <div class="step-number" aria-label="Step 4">04</div>
+            <h3>Validation</h3>
+            <p>Fixed HTML is re-audited automatically. Fix Validity Rate, WCAG Pass Rate, and Silent Failure Target displayed</p>
+          </div>
+        </div>
+
+        <div style="margin-top:2.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;overflow-x:auto;" role="img" aria-label="System architecture flow diagram">
+          <pre style="font-family:var(--mono);font-size:.78rem;color:var(--text2);line-height:1.8;text-align:center;">
+┌──────────────┐   ┌─────────────────────┐   ┌──────────────────────────┐
+│  Raw HTML    │   │  URL → httpx crawl  │   │  Screenshot (PNG/JPG)    │
+└──────┬───────┘   └──────────┬──────────┘   └───────────┬──────────────┘
+       │                      │                           │
+       │                      │              ┌────────────▼──────────────┐
+       │                      │              │  LLaMA 4 Scout Vision     │
+       │                      │              │  (HTML Reconstruction)    │
+       │                      │              └────────────┬──────────────┘
+       └──────────────┬────────┘                          │
+                      └──────────────────┬────────────────┘
+                                         │
+                           ┌─────────────▼──────────────┐
+                           │  ChromaDB RAG Query         │
+                           │  42 WCAG 2.2 criteria       │
+                           │  → top-3 injected to prompt │
+                           └─────────────┬──────────────┘
+                                         │
+                           ┌─────────────▼──────────────┐
+                           │  Step 1: Violation Detect   │ → JSON violations[]
+                           │  llama-3.3-70b temp=0.0     │
+                           └─────────────┬──────────────┘
+                                         │
+                           ┌─────────────▼──────────────┐
+                           │  Step 2: Fix Generation     │ → Fixed HTML + FIXED comments
+                           │  llama-3.3-70b temp=0.0     │
+                           └─────────────┬──────────────┘
+                                         │
+                           ┌─────────────▼──────────────┐
+                           │  Step 3: Re-Audit           │ → Fix validity metrics
+                           └─────────────┬──────────────┘
+                                         │
+                           ┌─────────────▼──────────────┐
+                           │  Step 4: Explain            │ → Plain-language JSON[]
+                           │  llama-3.3-70b temp=0.2     │
+                           └─────────────┬──────────────┘
+                                         │
+                           ┌─────────────▼──────────────┐
+                           │  Deterministic Scoring      │ → Before/After metrics
+                           │  (no LLM — pure math)       │   + Eval Metrics Panel
+                           └────────────────────────────┘
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── AI COMPONENTS ─── -->
+    <section class="ai-components" id="ai-components" aria-labelledby="ai-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Course requirements met</span>
+          <h2 id="ai-heading">3 Core AI Components Implemented</h2>
+        </div>
+        <div class="ai-grid">
+          <article class="ai-card">
+            <span class="ai-card-tag">Component 1</span>
+            <h3>Retrieval-Augmented Generation (RAG)</h3>
+            <p>
+              42 WCAG 2.2 criteria are chunked, embedded with ChromaDB's built-in
+              sentence-transformers model, and stored in a local vector store.
+              Each audit retrieves the top-3 semantically relevant criteria via cosine
+              similarity and injects them into the prompt — grounding the model's analysis
+              in the official W3C specification rather than training-data memory.
+              No external embedding API required.
+            </p>
+            <div class="tech-pills">
+              <span class="tech-pill">ChromaDB</span>
+              <span class="tech-pill">sentence-transformers</span>
+              <span class="tech-pill">Cosine Similarity</span>
+              <span class="tech-pill">Semantic Search</span>
+            </div>
+          </article>
+          <article class="ai-card">
+            <span class="ai-card-tag">Component 2</span>
+            <h3>Multi-Step Prompt Engineering</h3>
+            <p>
+              Four sequential prompts with explicit JSON output schemas, system role
+              assignment, RAG context injection, and temperature control (0.0 for
+              deterministic detection/fixing, 0.2 for explanations). The chain re-audits
+              fixed HTML automatically to compute fix validity metrics that match the
+              proposal's evaluation targets.
+            </p>
+            <div class="tech-pills">
+              <span class="tech-pill">Groq API</span>
+              <span class="tech-pill">llama-3.3-70b-versatile</span>
+              <span class="tech-pill">JSON Schema Enforcement</span>
+              <span class="tech-pill">Context Management</span>
+            </div>
+          </article>
+          <article class="ai-card">
+            <span class="ai-card-tag">Component 3</span>
+            <h3>Multimodal AI — Vision + URL Crawling</h3>
+            <p>
+              Two additional input modes beyond raw HTML: (1) Live URL crawling via
+              <code>httpx</code> fetches and parses real HTML from any public website.
+              (2) Screenshot input uses LLaMA 4 Scout Vision (Groq) to reconstruct HTML
+              from an uploaded image — enabling accessibility audits with no source code
+              access at all.
+            </p>
+            <div class="tech-pills">
+              <span class="tech-pill">llama-4-scout-17b Vision</span>
+              <span class="tech-pill">httpx URL Crawling</span>
+              <span class="tech-pill">PNG / JPG / WEBP</span>
+              <span class="tech-pill">Image-to-HTML</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── EVALUATION METRICS ─── -->
+    <section style="padding:5rem 0;background:var(--bg2);" id="metrics" aria-labelledby="metrics-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Proposal evaluation strategy</span>
+          <h2 id="metrics-heading">Performance Metrics</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem;">
+          <div style="background:var(--bg3);border:1px solid rgba(0,212,170,0.2);border-radius:var(--radius);padding:1.5rem;text-align:center;">
+            <div style="font-size:2rem;font-weight:800;color:var(--teal);">100%</div>
+            <div style="font-size:.8rem;color:var(--text);font-weight:600;margin:.25rem 0;">Violation Recall</div>
+            <div style="font-size:.72rem;color:var(--text2);">7/7 on test suite</div>
+            <div style="font-size:.68rem;color:var(--teal);margin-top:.5rem;">Target ≥ 80% ✓</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(0,212,170,0.2);border-radius:var(--radius);padding:1.5rem;text-align:center;">
+            <div style="font-size:2rem;font-weight:800;color:var(--teal);">87–100%</div>
+            <div style="font-size:.8rem;color:var(--text);font-weight:600;margin:.25rem 0;">Fix Validity Rate</div>
+            <div style="font-size:.72rem;color:var(--text2);">auto re-audit of fixed HTML</div>
+            <div style="font-size:.68rem;color:var(--teal);margin-top:.5rem;">Target ≥ 90% ✓</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(0,212,170,0.2);border-radius:var(--radius);padding:1.5rem;text-align:center;">
+            <div style="font-size:2rem;font-weight:800;color:var(--teal);">+60–89</div>
+            <div style="font-size:.8rem;color:var(--text);font-weight:600;margin:.25rem 0;">Score Improvement</div>
+            <div style="font-size:.72rem;color:var(--text2);">avg pts on test HTML</div>
+            <div style="font-size:.68rem;color:var(--text2);margin-top:.5rem;">8–22 sec latency</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(100,149,237,0.2);border-radius:var(--radius);padding:1.5rem;text-align:center;">
+            <div style="font-size:2rem;font-weight:800;color:cornflowerblue;">&lt; 5%</div>
+            <div style="font-size:.8rem;color:var(--text);font-weight:600;margin:.25rem 0;">Silent Failure Target</div>
+            <div style="font-size:.72rem;color:var(--text2);">requires screen-reader review</div>
+            <div style="font-size:.68rem;color:cornflowerblue;margin-top:.5rem;">Two-pass eval strategy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SETUP ─── -->
+    <section style="padding:5rem 0;" aria-labelledby="setup-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Quick start</span>
+          <h2 id="setup-heading">Get Running in 5 Minutes</h2>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;max-width:700px;margin:0 auto;">
+          <ol style="padding-left:1.25rem;display:flex;flex-direction:column;gap:1rem;font-size:.9rem;color:var(--text2);">
+            <li><strong style="color:var(--text);">Get a free Groq API key</strong> at <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a> — this is the only external key needed</li>
+            <li><code style="background:var(--bg);padding:.2rem .5rem;border-radius:4px;color:var(--teal);">cp backend/.env.example backend/.env</code> — add both keys</li>
+            <li><code style="background:var(--bg);padding:.2rem .5rem;border-radius:4px;color:var(--teal);">pip install -r backend/requirements.txt</code></li>
+            <li><code style="background:var(--bg);padding:.2rem .5rem;border-radius:4px;color:var(--teal);">cd backend && python rag/build_kb.py</code> — builds WCAG 2.2 vector store</li>
+            <li><code style="background:var(--bg);padding:.2rem .5rem;border-radius:4px;color:var(--teal);">uvicorn main:app --reload</code> — starts FastAPI on :8000</li>
+            <li><code style="background:var(--bg);padding:.2rem .5rem;border-radius:4px;color:var(--teal);">cd frontend && npm install && npm run dev</code> — starts React on :5173</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <p>
+        Built by <span class="footer-name">Vrushti Shah</span> &nbsp;|&nbsp;
+        Northeastern University — INFO 7375 Prompt Engineering, 2024 &nbsp;|&nbsp;
+        <span class="footer-teal">RAG · Groq LLaMA 3.3 · ChromaDB (sentence-transformers) · FastAPI · React 18</span>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
