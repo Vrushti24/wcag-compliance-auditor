@@ -108,7 +108,7 @@ User Input
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/wcag-compliance-auditor.git
+git clone https://github.com/m-minkara/wcag-compliance-auditor.git
 cd wcag-compliance-auditor
 
 # 2. Set up Python virtual environment
